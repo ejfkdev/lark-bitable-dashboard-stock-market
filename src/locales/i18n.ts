@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import i18n from 'i18next';
+import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { bitable } from '@lark-base-open/js-sdk';
@@ -27,7 +27,7 @@ import fr from '@douyinfe/semi-ui/lib/es/locale/source/fr';
 // import ro from '@douyinfe/semi-ui/lib/es/locale/source/ro';
 import resources from './resources.json';
 
-i18n
+i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
@@ -39,8 +39,8 @@ i18n
   });
 
 bitable.bridge.getLanguage().then(lng => {
-  if (i18n.language !== lng) {
-    i18n.changeLanguage(lng);
+  if (i18next.language !== lng) {
+    i18next.changeLanguage(lng);
   }
 });
 
