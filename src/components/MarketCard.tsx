@@ -37,7 +37,7 @@ export default function MarketCard({
       once(() => setTimeout(dashboard.setRendered, 500));
     });
 
-  const { run: update } = useThrottleFn(
+  const { run: update, flush } = useThrottleFn(
     async () => {
       if (!chartRef.current) {
         return;
@@ -65,6 +65,7 @@ export default function MarketCard({
   useUpdateEffect(() => {
     setData(null);
     update();
+    flush();
   }, [code]);
   useUpdateEffect(draw, [red]);
   useUpdateEffect(draw, [data]);
@@ -104,7 +105,7 @@ export default function MarketCard({
       <div className="box-border w-full grow" ref={chartDomRef}></div>
       <div className="box-border items-center content-around place-content-around gap-y-[5vh] grid grid-cols-[max-content_max-content] auto-rows-auto pb-[8vh]">
         <Typography.Text className="font-flex-[8]">
-          {t(data?.name ?? '')}
+          {t(data?.code ?? '')}
         </Typography.Text>
         <motion.div
           initial={{ opacity: 0.5 }}
@@ -125,9 +126,11 @@ export default function MarketCard({
           exit={{ opacity: 0.5 }}
           transition={{ duration: 0.5 }}
           key={data?.lastPrice}
-          className="font-flex-[10] font-bold font-mono"
+          className=""
         >
-          {data?.lastPrice}
+          <Typography.Text className="font-flex-[10] font-bold font-mono">
+            {data?.lastPrice}
+          </Typography.Text>
         </motion.div>
         <motion.div
           initial={{ opacity: 0.5 }}
@@ -190,7 +193,7 @@ const getOptions = (listStr?: string, lastStr?: string, red?: boolean) => {
         type: 'line',
         lineStyle: {
           color: lineColor, // 设置线条样式
-          width: 1,
+          width: 2,
         },
         label: '',
         showSymbol: false,
@@ -216,9 +219,9 @@ const getOptions = (listStr?: string, lastStr?: string, red?: boolean) => {
             0,
             0,
             0,
-            0.5,
+            0.6,
             [
-              { offset: 0, color: `rgba(${areaColor}, 0.25)` }, // 顶部颜色
+              { offset: 0, color: `rgba(${areaColor}, 0.3)` }, // 顶部颜色
               { offset: 1, color: `rgba(${areaColor}, 0)` }, // 底部透明
             ],
             false,

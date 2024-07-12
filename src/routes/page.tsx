@@ -1,15 +1,16 @@
 import './index.css';
 import { dashboard, DashboardState } from '@lark-base-open/js-sdk';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import classNames from 'classnames';
-import { Space, Form, Button } from '@douyinfe/semi-ui';
+import { Space, Form, Button, Typography } from '@douyinfe/semi-ui';
 import { useSetState } from 'ahooks';
 import { useTranslation } from 'react-i18next';
-import { ICustomConfig } from '@shared/types';
+import { type ICustomConfig } from '@shared/types';
 import MarketCard from '@/components/MarketCard';
 
 const Index = () => {
   const isCreate = dashboard.state === DashboardState.Create;
+  const formRef = useRef<Form>(null);
   const { t } = useTranslation();
   /** 是否配置模式下 */
   const isConfig = dashboard.state === DashboardState.Config || isCreate;
@@ -18,16 +19,23 @@ const Index = () => {
     color: 'red',
     interval: 10,
   });
+  const [ready, setReady] = useState(false);
   const updateConfig = (res: any) => {
     const { customConfig } = res;
     if (customConfig) {
       setConfig(customConfig);
+      formRef.current?.formApi.setValues(customConfig);
     }
   };
-
   useEffect(() => {
     if (!isCreate) {
-      dashboard.getConfig().then(updateConfig);
+      dashboard
+        .getConfig()
+        .then(updateConfig)
+        .then(() => setReady(true));
+    } else {
+      formRef.current?.formApi.setValues(config);
+      setReady(true);
     }
     const offConfigChange = dashboard.onConfigChange(r => {
       // 监听配置变化，协同修改配置
@@ -50,27 +58,28 @@ const Index = () => {
   return (
     <div className="main">
       <main className="content">
-        <MarketCard
-          code={config?.code}
-          red={config?.color === 'red'}
-          interval={config?.interval}
-        />
+        {ready && (
+          <MarketCard
+            code={config?.code}
+            red={config?.color === 'red'}
+            interval={config?.interval}
+          />
+        )}
       </main>
       {isConfig && (
         <aside className="config-panel">
-          <Form className="form" initValues={config} onValueChange={setConfig}>
+          <Form className="form" ref={formRef} onValueChange={setConfig}>
             <Form.Select
               field="code"
               label={t('codeLabel')}
               filter
               className="w-full"
-              initValue={'000001'}
             >
               {[...marketCode.keys()].map((key: string) => (
                 <Form.Select.OptGroup label={t(key)} key={key}>
                   {marketCode.get(key)?.map(item => (
                     <Form.Select.Option key={item[0]} value={item[0]}>
-                      {`${t(item[1])} - ${item[0]}`}
+                      {`${t(item[0])} - ${item[0]}`}
                     </Form.Select.Option>
                   ))}
                 </Form.Select.OptGroup>
@@ -79,7 +88,6 @@ const Index = () => {
             <Form.RadioGroup
               field="color"
               type="card"
-              initValue="red"
               direction="vertical"
               label={t('colorLabel')}
               className="gap-0 w-full"
@@ -118,6 +126,19 @@ const Index = () => {
                 }}
               />
             </Form.RadioGroup>
+            <div className="mt-8">
+              <Typography.Text
+                className="float-end"
+                icon={<span className="icon-doc"></span>}
+                underline
+                link={{
+                  target: '_blank',
+                  href: 'https://ejfk-dev.feishu.cn/wiki/IPwKwXmpHiGNgokvnhSczKDonAh',
+                }}
+              >
+                {t('guide')}
+              </Typography.Text>
+            </div>
           </Form>
           <Button
             className="btn"
