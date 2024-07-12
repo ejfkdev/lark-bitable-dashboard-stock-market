@@ -10,7 +10,8 @@
     "new": "modern new",
     "lint": "modern lint",
     "prepare": "husky install",
-    "upgrade": "modern upgrade"
+    "upgrade": "modern upgrade",
+    "deploy": "modern deploy"
   },
   "engines": {
     "node": ">=16.18.1"
@@ -25,23 +26,47 @@
     "dist/"
   ],
   "dependencies": {
-    "@modern-js/runtime": "2.54.6",
-    "react": "~18.2.0",
-    "react-dom": "~18.2.0"
+    "@douyinfe/semi-ui": "^2.61.0",
+    "@emotion/react": "^11.11.4",
+    "@lark-base-open/js-sdk": "^0.4.0",
+    "@modern-js/plugin-bff": "2.55.0",
+    "@modern-js/plugin-express": "2.55.0",
+    "@modern-js/plugin-tailwindcss": "2.55.0",
+    "@modern-js/runtime": "2.55.0",
+    "@semi-bot/semi-theme-feishu-dashboard": "^1.0.4",
+    "ahooks": "^3.8.0",
+    "classnames": "^2.5.1",
+    "echarts": "^5.5.1",
+    "es-toolkit": "^1.9.0",
+    "express": "~4.19.2",
+    "framer-motion": "^11.3.2",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "react": "~18.3.1",
+    "react-dom": "~18.3.1",
+    "react-i18next": "^14.1.2"
   },
   "devDependencies": {
-    "@modern-js/app-tools": "2.54.6",
-    "@modern-js/eslint-config": "2.54.6",
-    "@modern-js/tsconfig": "2.54.6",
-    "@modern-js-app/eslint-config": "2.54.6",
-    "typescript": "~5.0.4",
-    "@types/jest": "~29.2.4",
-    "@types/node": "~16.11.7",
-    "@types/react": "~18.0.26",
-    "@types/react-dom": "~18.0.10",
-    "lint-staged": "~13.1.0",
-    "prettier": "~2.8.1",
-    "husky": "~8.0.1",
-    "rimraf": "~3.0.2"
+    "@modern-js-app/eslint-config": "2.55.0",
+    "@modern-js/app-tools": "2.55.0",
+    "@modern-js/eslint-config": "2.55.0",
+    "@modern-js/plugin-ssg": "2.55.0",
+    "@modern-js/tsconfig": "2.55.0",
+    "@types/express": "~4.17.21",
+    "@types/jest": "~29.5.12",
+    "@types/node": "~20.14.10",
+    "@types/react": "~18.3.3",
+    "@types/react-dom": "~18.3.0",
+    "autoprefixer": "^10.4.19",
+    "daisyui": "^4.12.10",
+    "husky": "~9.0.11",
+    "lint-staged": "~15.2.7",
+    "postcss": "^8.4.39",
+    "postcss-import": "^16.1.0",
+    "prettier": "~3.3.2",
+    "rimraf": "~6.0.1",
+    "tailwindcss": "~3.4.4",
+    "ts-node": "~10.9.2",
+    "tsconfig-paths": "~4.2.0",
+    "typescript": "~5.5.3"
   }
 }
