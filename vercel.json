@@ -1,4 +1,9 @@
 {
   "buildCommand": "modern deploy",
-  "outputDirectory": ".vercel/output"
+  "outputDirectory": ".vercel/output",
+  "functions": {
+    "api/**/*": {
+      "maxDuration": 60
+    }
+  }
 }
